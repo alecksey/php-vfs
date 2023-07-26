@@ -109,7 +109,10 @@ class Directory implements NodeContainerInterface
         $this->dateModified = $dateTime;
     }
 
-    public function getIterator()
+    /**
+     * @inheritDoc
+     */
+    public function getIterator() : \Traversable
     {
         return new ArrayIterator($this->nodes);
     }
