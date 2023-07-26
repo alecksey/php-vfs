@@ -58,7 +58,7 @@ class FopenAcceptanceTest extends AcceptanceTestCase
      */
     public function testFopenFileError($mode)
     {
-        $this->setExpectedException('PHPUnit_Framework_Error_Warning');
+        $this->expectException('\PHPUnit\Framework\Error\Warning');
 
         fopen("$this->scheme:///foo/bar", $mode);
     }
@@ -76,7 +76,7 @@ class FopenAcceptanceTest extends AcceptanceTestCase
      */
     public function testFopenMissingFileError($mode)
     {
-        $this->setExpectedException('PHPUnit_Framework_Error_Warning');
+        $this->expectException('\PHPUnit\Framework\Error\Warning');
 
         fopen("$this->scheme:///foo/baz", $mode);
     }
@@ -94,7 +94,7 @@ class FopenAcceptanceTest extends AcceptanceTestCase
      */
     public function testFopenDirectoryError($mode)
     {
-        $this->setExpectedException('PHPUnit_Framework_Error_Warning');
+        $this->expectException('\PHPUnit\Framework\Error\Warning');
 
         fopen("$this->scheme:///foo", $mode);
     }
@@ -112,7 +112,7 @@ class FopenAcceptanceTest extends AcceptanceTestCase
      */
     public function testFopenMissingDirectoryError($mode)
     {
-        $this->setExpectedException('PHPUnit_Framework_Error_Warning');
+        $this->expectException('\PHPUnit\Framework\Error\Warning');
 
         fopen("$this->scheme:///baz", $mode);
     }

@@ -7,7 +7,9 @@ use Vfs\Test\UnitTestCase;
 
 class FileSystemBuilderTest extends UnitTestCase
 {
-    public function setUp()
+    protected $builder = null;
+
+    public function setUp(): void
     {
         $this->builder = new FileSystemBuilder();
     }
@@ -23,6 +25,7 @@ class FileSystemBuilderTest extends UnitTestCase
         $this->builder->setLogger($factory);
 
         $this->assertSame($factory, $this->builder->getLogger());
+        Mockery::close();
     }
 
     public function testGetNodeFactory()
@@ -36,6 +39,7 @@ class FileSystemBuilderTest extends UnitTestCase
         $this->builder->setNodeFactory($factory);
 
         $this->assertSame($factory, $this->builder->getNodeFactory());
+        Mockery::close();
     }
 
     public function testGetNodeWalker()
@@ -49,6 +53,7 @@ class FileSystemBuilderTest extends UnitTestCase
         $this->builder->setNodeWalker($walker);
 
         $this->assertSame($walker, $this->builder->getNodeWalker());
+        Mockery::close();
     }
 
     public function testGetRegistry()
@@ -62,6 +67,7 @@ class FileSystemBuilderTest extends UnitTestCase
         $this->builder->setRegistry($registry);
 
         $this->assertSame($registry, $this->builder->getRegistry());
+        Mockery::close();
     }
 
     public function testGetScheme()
@@ -117,6 +123,7 @@ class FileSystemBuilderTest extends UnitTestCase
         $this->assertInstanceOf('Vfs\FileSystemInterface', $fs);
         $this->assertSame($factory, $fs->getNodeFactory());
         $this->assertSame($walker, $fs->getNodeWalker());
+        Mockery::close();
     }
 
     public function testBuildWithDefaults()

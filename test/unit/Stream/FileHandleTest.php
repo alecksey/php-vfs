@@ -6,9 +6,15 @@ use Vfs\Test\UnitTestCase;
 
 class FileHandleTest extends UnitTestCase
 {
-    public function setUp()
+    public function setUp()  : void
     {
         $this->fs = Mockery::mock('Vfs\FileSystem');
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+        Mockery::close();
     }
 
     public function dataCanRead()
@@ -244,7 +250,7 @@ class FileHandleTest extends UnitTestCase
     {
         $handle = new FileHandle($this->fs, 'foo://bar');
 
-        $this->setExpectedException('Vfs\Exception\UnopenedHandleException');
+        $this->expectException('Vfs\Exception\UnopenedHandleException');
 
         $handle->read();
     }
@@ -266,7 +272,7 @@ class FileHandleTest extends UnitTestCase
     {
         $handle = new FileHandle($this->fs, 'foo://bar');
 
-        $this->setExpectedException('Vfs\Exception\UnopenedHandleException');
+        $this->expectException('Vfs\Exception\UnopenedHandleException');
 
         $handle->write('');
     }

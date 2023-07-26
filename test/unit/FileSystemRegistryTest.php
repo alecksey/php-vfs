@@ -6,7 +6,7 @@ use Vfs\Test\UnitTestCase;
 
 class FileSystemRegistryTest extends UnitTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->fsA = $a = Mockery::mock('Vfs\FileSystemInterface');
         $this->fsB = $b = Mockery::mock('Vfs\FileSystemInterface');
@@ -14,6 +14,12 @@ class FileSystemRegistryTest extends UnitTestCase
         $this->fss = ['foo' => $a, 'bar' => $b, 'baz' => $c];
 
         $this->registry = new FileSystemRegistry($this->fss);
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+        Mockery::close();
     }
 
     public function testInterface()
@@ -33,7 +39,7 @@ class FileSystemRegistryTest extends UnitTestCase
     {
         $fs = Mockery::mock('Vfs\FileSystemInterface');
 
-        $this->setExpectedException('Vfs\Exception\RegisteredSchemeException');
+        $this->expectException('Vfs\Exception\RegisteredSchemeException');
 
         $this->registry->add('foo', $fs);
     }
@@ -45,7 +51,7 @@ class FileSystemRegistryTest extends UnitTestCase
 
     public function testGetThrowsWhenSchemeUnregistered()
     {
-        $this->setExpectedException('Vfs\Exception\UnregisteredSchemeException');
+        $this->expectException('Vfs\Exception\UnregisteredSchemeException');
 
         $this->registry->get('bam');
     }
@@ -69,7 +75,7 @@ class FileSystemRegistryTest extends UnitTestCase
 
     public function testRemoveThrowsWhenSchemeUnregistered()
     {
-        $this->setExpectedException('Vfs\Exception\UnregisteredSchemeException');
+        $this->expectException('Vfs\Exception\UnregisteredSchemeException');
 
         $this->registry->remove('bam');
     }

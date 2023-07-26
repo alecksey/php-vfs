@@ -6,12 +6,23 @@ use Vfs\Test\UnitTestCase;
 
 class DirectoryTest extends UnitTestCase
 {
-    public function setUp()
+    protected $nodes;
+    protected $nodeA;
+    protected $nodeB;
+    protected $nodeC;
+
+    public function setUp() : void
     {
         $this->nodeA = $a = Mockery::mock('Vfs\Node\NodeInterface');
         $this->nodeB = $b = Mockery::mock('Vfs\Node\NodeInterface');
         $this->nodeC = $c = Mockery::mock('Vfs\Node\NodeInterface');
         $this->nodes = ['foo' => $a, 'bar' => $b, 'baz' => $c];
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+        Mockery::close();
     }
 
     public function testInstance()
@@ -58,7 +69,7 @@ class DirectoryTest extends UnitTestCase
     public function testGetThrowsMissingNode()
     {
         $dir = new Directory();
-        $this->setExpectedException('Vfs\Exception\MissingNodeException');
+        $this->expectException('Vfs\Exception\MissingNodeException');
 
         $dir->get('foo');
     }

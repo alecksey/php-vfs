@@ -7,7 +7,7 @@ use Vfs\Test\UnitTestCase;
 
 class PhpErrorLoggerTest extends UnitTestCase
 {
-    public function setUp()
+    public function setUp() : void
     {
         $this->logger = new PhpErrorLogger();
     }
@@ -15,14 +15,14 @@ class PhpErrorLoggerTest extends UnitTestCase
     public function dataLog()
     {
         return [
-            ['emergency', 'PHPUnit_Framework_Error'],
-            ['alert',     'PHPUnit_Framework_Error'],
-            ['critical',  'PHPUnit_Framework_Error'],
-            ['error',     'PHPUnit_Framework_Error'],
-            ['warning',   'PHPUnit_Framework_Error_Warning'],
-            ['notice',    'PHPUnit_Framework_Error_Notice'],
-            ['info',      'PHPUnit_Framework_Error_Notice'],
-            ['debug',     'PHPUnit_Framework_Error_Notice']
+            ['emergency', '\PHPUnit\Framework\Error\Error'],
+            ['alert',     '\PHPUnit\Framework\Error\Error'],
+            ['critical',  '\PHPUnit\Framework\Error\Error'],
+            ['error',     '\PHPUnit\Framework\Error\Error'],
+            ['warning',   '\PHPUnit\Framework\Error\Warning'],
+            ['notice',    '\PHPUnit\Framework\Error\Notice'],
+            ['info',      '\PHPUnit\Framework\Error\Notice'],
+            ['debug',     '\PHPUnit\Framework\Error\Notice']
         ];
     }
 
@@ -36,7 +36,7 @@ class PhpErrorLoggerTest extends UnitTestCase
      */
     public function testLog($level, $expectation)
     {
-        $this->setExpectedException($expectation);
+        $this->expectException($expectation);
 
         $this->logger->log($level, 'foo', []);
     }
@@ -45,8 +45,9 @@ class PhpErrorLoggerTest extends UnitTestCase
     {
         try {
             $this->logger->log('debug', 'foo {bar} baz', ['bar' => 'BAR']);
-        } catch (\PHPUnit_Framework_Error_Notice $e) {
-            return $this->assertRegexp('/foo BAR baz/', $e->getMessage());
+        } catch (\PHPUnit\Framework\Error\Notice $e) {
+            $this->assertMatchesRegularExpression('/foo BAR baz/', $e->getMessage());
+            return;
         }
 
         $this->fail('A PHP Notice should have been triggered');
@@ -54,56 +55,56 @@ class PhpErrorLoggerTest extends UnitTestCase
 
     public function testEmergency()
     {
-        $this->setExpectedException('PHPUnit_Framework_Error');
+        $this->expectException('\PHPUnit\Framework\Error\Error');
 
         $this->logger->emergency('foo', []);
     }
 
     public function testAlert()
     {
-        $this->setExpectedException('PHPUnit_Framework_Error');
+        $this->expectException('\PHPUnit\Framework\Error\Error');
 
         $this->logger->alert('foo', []);
     }
 
     public function testCritical()
     {
-        $this->setExpectedException('PHPUnit_Framework_Error');
+        $this->expectException('\PHPUnit\Framework\Error\Error');
 
         $this->logger->critical('foo', []);
     }
 
     public function testError()
     {
-        $this->setExpectedException('PHPUnit_Framework_Error');
+        $this->expectException('\PHPUnit\Framework\Error\Error');
 
         $this->logger->error('foo', []);
     }
 
     public function testWarning()
     {
-        $this->setExpectedException('PHPUnit_Framework_Error_Warning');
+        $this->expectException('\PHPUnit\Framework\Error\Warning');
 
         $this->logger->warning('foo', []);
     }
 
     public function testNotice()
     {
-        $this->setExpectedException('PHPUnit_Framework_Error_Notice');
+        $this->expectException('\PHPUnit\Framework\Error\Notice');
 
         $this->logger->notice('foo', []);
     }
 
     public function testInfo()
     {
-        $this->setExpectedException('PHPUnit_Framework_Error_Notice');
+        $this->expectException('\PHPUnit\Framework\Error\Notice');
 
         $this->logger->info('foo', []);
     }
 
     public function testDebug()
     {
-        $this->setExpectedException('PHPUnit_Framework_Error_Notice');
+        $this->expectException('\PHPUnit\Framework\Error\Notice');
 
         $this->logger->debug('foo', []);
     }

@@ -6,9 +6,16 @@ use Vfs\Test\UnitTestCase;
 
 class DirectoryHandleTest extends UnitTestCase
 {
-    public function setUp()
+    public function setUp() : void
     {
         $this->fs = Mockery::mock('Vfs\FileSystem');
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+        Mockery::close();
+
     }
 
     public function testInterface()
@@ -31,6 +38,7 @@ class DirectoryHandleTest extends UnitTestCase
         $foo->shouldReceive('add')->once()->with('baz', $bar);
 
         $handle->rename('foo://foo/baz');
+        Mockery::close();
     }
 
     public function testRenameMissingSource()
@@ -49,6 +57,7 @@ class DirectoryHandleTest extends UnitTestCase
         $this->fs->shouldReceive('getLogger')->once()->withNoArgs()->andReturn($logger);
 
         $handle->rename('foo://bar');
+        Mockery::close();
     }
 
     public function testCreateRecursively()
@@ -75,5 +84,6 @@ class DirectoryHandleTest extends UnitTestCase
 
 
         $handle->create(0777, true);
+        Mockery::close();
     }
 }

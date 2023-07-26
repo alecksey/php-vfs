@@ -6,7 +6,7 @@ use Vfs\Test\UnitTestCase;
 
 class FileSystemTest extends UnitTestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->scheme = 'foo';
         $this->wrapperClass = 'Vfs\Stream\StreamWrapper';
@@ -19,6 +19,12 @@ class FileSystemTest extends UnitTestCase
         $this->factory->shouldReceive('buildDirectory')->once()->withNoArgs()->andReturn($this->root);
 
         $this->fs = new FileSystem($this->scheme, $this->wrapperClass, $this->factory, $this->walker, $this->registry, $this->logger);
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+        Mockery::close();
     }
 
     public function testInterface()
@@ -55,7 +61,7 @@ class FileSystemTest extends UnitTestCase
     {
         $this->registry->shouldReceive('has')->once()->with($this->scheme)->andReturn(true);
 
-        $this->setExpectedException('Vfs\Exception\RegisteredSchemeException');
+        $this->expectException('Vfs\Exception\RegisteredSchemeException');
 
         $this->fs->mount();
     }
@@ -64,7 +70,7 @@ class FileSystemTest extends UnitTestCase
     {
         $this->registry->shouldReceive('has')->once()->with($this->scheme)->andReturn(false);
 
-        $this->setExpectedException('Vfs\Exception\UnregisteredSchemeException');
+        $this->expectException('Vfs\Exception\UnregisteredSchemeException');
 
         $this->fs->unmount();
     }

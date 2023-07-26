@@ -8,7 +8,7 @@ use Vfs\Test\UnitTestCase;
 
 class NodeFactoryTest extends UnitTestCase
 {
-    public function setUp()
+    public function setUp() : void
     {
         $this->factory = new NodeFactory();
     }
@@ -42,6 +42,7 @@ class NodeFactoryTest extends UnitTestCase
 
         $this->assertInstanceof('Vfs\Node\NodeContainerInterface', $dir);
         $this->assertSame($node, $dir->get('foo'));
+        Mockery::close();
     }
 
     public function testBuildDirectoryLink()

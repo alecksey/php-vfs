@@ -9,7 +9,7 @@
  */
 namespace Vfs\Test;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use \PHPUnit\Framework\TestCase;
 use Vfs\FileSystemBuilder;
 use Vfs\FileSystemInterface;
 
@@ -20,12 +20,12 @@ class AcceptanceTestCase extends TestCase
     protected $scheme = 'vfs';
     protected $wrapperClass = 'Vfs\Stream\StreamWrapper';
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->fs = $this->buildFileSystem();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if (in_array($this->scheme, stream_get_wrappers())) {
             $this->fs->unmount();

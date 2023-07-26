@@ -9,7 +9,7 @@
  */
 namespace Vfs\Test;
 
-use PHPUnit_Framework_TestCase as TestCase;
+use \PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Vfs\FileSystemBuilder;
 
@@ -17,13 +17,15 @@ class FunctionalTestCase extends TestCase
 {
     protected $scheme = 'foo';
 
-    public function setUp()
+    protected $fs = null;
+
+    public function setUp(): void
     {
         $builder = new FileSystemBuilder($this->scheme);
         $this->fs = $builder->build();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         if ($this->isMounted($this->scheme)) {
             $this->fs->unmount();

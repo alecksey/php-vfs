@@ -6,7 +6,7 @@ use Vfs\Test\UnitTestCase;
 
 class NodeWalkerTest extends UnitTestCase
 {
-    public function setUp()
+    public function setUp()  : void
     {
         $this->walker = new NodeWalker();
     }
@@ -34,6 +34,7 @@ class NodeWalkerTest extends UnitTestCase
         $root->shouldReceive('get')->once()->with('foo')->andReturn($foo);
 
         $this->assertSame($bar, $this->walker->findNode($root, '/foo/bar'));
+        Mockery::close();
     }
 
     /**
@@ -49,6 +50,7 @@ class NodeWalkerTest extends UnitTestCase
         }
 
         $this->assertSame($root, $this->walker->findNode($root, $path));
+        Mockery::close();
     }
 
     public function testFindNodeWithDotPaths()
@@ -77,6 +79,7 @@ class NodeWalkerTest extends UnitTestCase
         $foo->shouldReceive('get')->times(2)->with('..')->andReturn($root);
 
         $this->assertSame($baz, $this->walker->findNode($root, '/foo/../foo/./bar//../../foo/bar/./baz'));
+        Mockery::close();
     }
 
     public function testFindInvalidPath()
@@ -89,6 +92,7 @@ class NodeWalkerTest extends UnitTestCase
         $root->shouldReceive('get')->once()->with('foo')->andReturn($foo);
 
         $this->assertNull($this->walker->findNode($root, '/foo/bar'));
+        Mockery::close();
     }
 
     public function testWalkPath()
@@ -108,5 +112,6 @@ class NodeWalkerTest extends UnitTestCase
         };
 
         $this->assertSame($bar, $this->walker->walkPath($root, '/foo/bar', $fn));
+        Mockery::close();
     }
 }

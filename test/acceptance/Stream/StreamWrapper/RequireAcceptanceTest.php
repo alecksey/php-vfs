@@ -26,7 +26,7 @@ class RequireAcceptanceTest extends AcceptanceTestCase
 
     public function testIncludeMissingFile()
     {
-        $this->setExpectedException('PHPUnit_Framework_Error_Warning');
+        $this->expectException('\PHPUnit\Framework\Error\Warning');
 
         include "$this->scheme:///bar.php";
     }

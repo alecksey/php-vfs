@@ -18,6 +18,7 @@ class DirectoryLink implements NodeContainerInterface, LinkInterface
     protected $dateModified;
     protected $file;
     protected $mode;
+    protected $directory;
 
     /**
      * @param NodeContainerInterface $directory
